@@ -34,10 +34,24 @@ class TestApiStatus(object):
     test API status 
     '''
 
-    def test_apiStatus(self):
-        ''' test API status '''
+    def test_apiGetStatus(self):
+        ''' test API GET status '''
 
         url = tstcfg.apiUrl + '/status'
         r = requests.get(url)
 
         assert r.json()['API_status'] == 'OK'
+
+        
+class TestApiGet(object):
+    '''
+    test API GET responses
+    '''
+
+    def test_apiGetEmployees(self):
+        ''' test API GET employees '''
+
+        url = tstcfg.apiUrl + '/v1/employees'
+        r = requests.get(url)
+
+        assert type(r.json()['employees']) is list
