@@ -22,6 +22,13 @@ def getStatus():
     result = {'API_status':'OK'}
     return jsonify(result)
 
+@app.route("/api/v1/employees", methods = ['GET'])
+def getEmployees():
+    conn = db_connect.connect()
+    query = conn.execute("select * from employees")
+    result = {'employees': [i[0] for i in query.cursor.fetchall()]}
+    return jsonify(result)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int("5002"), debug=True)
             
