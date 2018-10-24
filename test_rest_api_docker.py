@@ -1,4 +1,4 @@
-'''                                                                                                                           Tests for dockerized rest_api 
+'''                                                                                                                           Tests for dockerized rest_simple python REST api tests with py.test
 '''
 
 __author__     = "Jan Kogut"
@@ -29,6 +29,7 @@ tstcfg.apiUrl = 'http://localhost:5002/api'
 # Tests section starts here  #
 ##############################
 
+## GET API STATUS
 class TestApiStatus(object):
     '''
     test API status 
@@ -42,7 +43,7 @@ class TestApiStatus(object):
 
         assert r.json()['API_status'] == 'OK'
 
-        
+## GET      
 class TestApiGet(object):
     '''
     test API GET responses
@@ -57,11 +58,28 @@ class TestApiGet(object):
         assert type(r.json()['employees']) is list
 
     def test_apiGetEmployeeId(self):
-        ''' test API GET employee ID '''
+        ''' test API GET employee ID with ID=1'''
 
         url = tstcfg.apiUrl + '/v1/employees/1'
         r = requests.get(url)
 
         assert type(r.json()['data']) is list
+
+## POST
+class TestApiPost(object):
+    '''
+    test API POST responses
+    '''
+
+    def test_apiPostEmployeesId(self):
+        ''' test API POST with new employee creation '''
+
+        url = tstcfg.apiUrl + '/v1/employees/new'
+
+        with open('app/payload.json', 'r') as f:
+            payload = json.load(f)
+            r = requests.post(url, json=payload)
+
+            assert r.status_code == 201
 
         
