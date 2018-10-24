@@ -55,3 +55,13 @@ class TestApiGet(object):
         r = requests.get(url)
 
         assert type(r.json()['employees']) is list
+
+    def test_apiGetEmployeeId(self):
+        ''' test API GET employee ID '''
+
+        url = tstcfg.apiUrl + '/v1/employees/1'
+        r = requests.get(url)
+
+        assert type(r.json()['data']) is list
+
+        
