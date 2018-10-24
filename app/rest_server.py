@@ -29,6 +29,14 @@ def getEmployees():
     result = {'employees': [i[0] for i in query.cursor.fetchall()]}
     return jsonify(result)
 
+@app.route("/api/v1/employees/<employee_id>", methods = ['GET'])
+def getEmployeeId(employee_id):
+    conn = db_connect.connect()
+    query = conn.execute("select * from employees where EmployeeId =%d "  %int(employee_id))
+    result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+    return jsonify(result)
+                
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int("5002"), debug=True)
             
