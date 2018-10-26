@@ -56,16 +56,21 @@ def getEmployees():
     """
     Select all employees
 
-    Return JSON with employeeID.
+    Return JSON with employeeID
     """
     
-    queryRes = session.query(Employees).all()
-    result   = { id:queryRes[id].LastName for id in xrange(len(queryRes)) }
+    result = {"employees": session.query(Employees.LastName).all() }
     return jsonify(result)
 
 ## GET employeeId
-@app.route("/api/v1/employees/<employee_id>", methods = ['GET'])
-def getEmployeeId(employee_id):  
+@app.route("/api/v1/employees/<employeeId>", methods = ['GET'])
+def getEmployeeId(employeeId):  
+    '''
+    Select employee depending on employeeId
+    
+    Return JSON with employeeIds data
+    '''
+
     conn = db_connect.connect()
     query = conn.execute("select * from employees where EmployeeId =%d "  %int(employee_id))
     result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
