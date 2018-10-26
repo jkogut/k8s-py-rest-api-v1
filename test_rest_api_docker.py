@@ -55,7 +55,7 @@ class TestApiGet(object):
         url = tstcfg.apiUrl + '/v1/employees'
         r = requests.get(url)
 
-        assert type(r.json()['employees']) is list
+        assert type(r.json()) is dict
 
     def test_apiGetEmployeeId(self):
         ''' test API GET employee ID with ID=1'''
