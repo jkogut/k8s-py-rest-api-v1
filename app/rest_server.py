@@ -59,12 +59,12 @@ def getEmployees():
     Return JSON with employeeID
     """
     
-    result = {"employees": session.query(Employees.LastName).all() }
+    result = {"employees": session.query(Employees.EmployeeId,Employees.LastName).all() }
     return jsonify(result)
 
 ## GET employeeId
 @app.route("/api/v1/employees/<employeeId>", methods = ['GET'])
-def getEmployeeId(employeeId):  
+def getEmployeeIdData(employeeId):  
     '''
     Select employee depending on employeeId
     
