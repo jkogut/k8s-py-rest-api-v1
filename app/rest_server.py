@@ -59,7 +59,7 @@ def getEmployees():
     Return JSON with employeeID
     """
     
-    result = {"employees": session.query(Employees.EmployeeId,Employees.LastName).all() }
+    result = {"employees": dict(session.query(Employees.EmployeeId,Employees.LastName).all()) }
     return jsonify(result)
 
 ## GET employeeId
