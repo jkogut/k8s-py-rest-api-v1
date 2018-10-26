@@ -9,30 +9,63 @@ __version__    = "0.0.1"
 __maintainer__ = "Jan Kogut"
 __status__     = "Beta"
 
-
 from flask import Flask, request, jsonify, abort
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-db_connect = create_engine('sqlite:///chinook.db')
+
 app = Flask(__name__)
+
+
+engine = create_engine('sqlite:///chinook.db', echo=True)
+Base = declarative_base(engine)
+
+class Employees(Base):
+    """ Class for declarative_base ORM db access """
+    __tablename__ = 'employees'
+    __table_args__ = {'autoload':True}
+
+
+def loadSession():
+    """ 
+    Create session 
+    Return session object
+    """
+    metadata = Base.metadata
+    Session  = sessionmaker(bind=engine)
+    session  = Session()
+    return session
+                                    
 
 ## API STATUS
 @app.route("/api/status", methods = ['GET'])
 def getStatus():
+    """ 
+    Check API Status
+
+    Return JSON with API_status
+    """
+
     result = {'API_status':'OK'}
     return jsonify(result)
 
 ## GET employees
 @app.route("/api/v1/employees", methods = ['GET'])
 def getEmployees():
-    conn = db_connect.connect()
-    query = conn.execute("select * from employees")
-    result = {'employees': [i[0] for i in query.cursor.fetchall()]}
+    """
+    Select all employees
+
+    Return JSON with employeeID.
+    """
+    
+    queryRes = session.query(Employees).all()
+    result   = { id:queryRes[id].LastName for id in xrange(len(queryRes)) }
     return jsonify(result)
 
 ## GET employeeId
 @app.route("/api/v1/employees/<employee_id>", methods = ['GET'])
-def getEmployeeId(employee_id):
+def getEmployeeId(employee_id):  
     conn = db_connect.connect()
     query = conn.execute("select * from employees where EmployeeId =%d "  %int(employee_id))
     result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
@@ -63,4 +96,5 @@ def insertNewEmployee():
 
 
 if __name__ == "__main__":
+    session = loadSession()
     app.run(host="0.0.0.0", port=int("5002"), debug=True)
