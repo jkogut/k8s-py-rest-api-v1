@@ -65,21 +65,21 @@ class TestApiGet(object):
 
         assert type(r.json()) is dict
 
-## POST
-class TestApiPost(object):
-    '''
-    test API POST responses
-    '''
+# ## POST
+# class TestApiPost(object):
+#     '''
+#     test API POST responses
+#     '''
 
-    def test_apiPostEmployeesId(self):
-        ''' test API POST with new employee creation '''
+#     def test_apiPostEmployeesId(self):
+#         ''' test API POST with new employee creation '''
 
-        url = tstcfg.apiUrl + '/v1/employees/new'
+#         url = tstcfg.apiUrl + '/v1/employees/new'
 
-        with open('app/payload.json', 'r') as f:
-            payload = json.load(f)
-            r = requests.post(url, json=payload)
+#         with open('app/payload.json', 'r') as f:
+#             payload = json.load(f)
+#             r = requests.post(url, json=payload)
 
-            assert r.status_code == 201
+#             assert r.status_code == 201
 
         
