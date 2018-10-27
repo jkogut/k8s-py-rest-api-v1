@@ -14,9 +14,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-
+#####################
 app = Flask(__name__)
-
 
 engine = create_engine('sqlite:///chinook.db', echo=True)
 Base = declarative_base(engine)
@@ -71,9 +70,9 @@ def getEmployeeIdData(employeeId):
     Return JSON with employeeIds data
     '''
 
-    conn = db_connect.connect()
-    query = conn.execute("select * from employees where EmployeeId =%d "  %int(employee_id))
-    result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+    empId = int(employeeId)
+    filterQuery = session.query(Employees).filter(Employees.EmployeeId==empId).all()
+    result = {x: getattr(filterQuery[0], x) for x in Employees.__table__.columns.keys()}
     return jsonify(result)
 
 ## POST create employee
