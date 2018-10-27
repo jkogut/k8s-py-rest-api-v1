@@ -59,21 +59,20 @@ def getEmployees():
     Return JSON with employeeID
     """
     
-    result = {"employees": dict(session.query(Employees.EmployeeId,Employees.LastName).all()) }
+    result = { "employees": dict(session.query(Employees.EmployeeId,Employees.LastName).all()) }
     return jsonify(result)
 
 
 ## GET employeeId
-@app.route("/api/v1/employees/<employeeId>", methods = ['GET'])
+@app.route("/api/v1/employees/<int:employeeId>", methods = ['GET'])
 def getEmployeeIdData(employeeId):  
     '''
     Select employee depending on employeeId
     Return JSON with employeeIds data
     '''
 
-    empId = int(employeeId)
-    filterQuery = session.query(Employees).filter(Employees.EmployeeId==empId).all()
-    result = {x: getattr(filterQuery[0], x) for x in Employees.__table__.columns.keys()}
+    filterQuery = session.query(Employees).filter(Employees.EmployeeId==employeeId).all()
+    result = { x: getattr(filterQuery[0], x) for x in Employees.__table__.columns.keys() }
     return jsonify(result)
 
 
