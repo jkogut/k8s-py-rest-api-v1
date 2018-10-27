@@ -1,0 +1,16 @@
+{
+    "NewNewName":"Kovalsky",
+    "FirstName":"John",
+    "Title":"Mr",
+    "ReportsTo":10,
+    "BirthDate":"1980-01-01 00:00:00",
+    "HireDate":"2018-01-01 00:00:00",
+    "Address":"Gagarinowicza 9",
+    "City":"Warsaw",
+    "State":"Mazovia",
+    "Country":"Poland",
+    "PostalCode":"00-001",
+    "Phone":"+48 001 002 003",
+    "Fax":"+48 001 002 003",
+    "Email":"jkovalsky@chinookcorp.com"
+}
