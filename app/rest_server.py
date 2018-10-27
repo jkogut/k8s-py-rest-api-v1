@@ -22,6 +22,7 @@ Base = declarative_base(engine)
 
 class Employees(Base):
     """ Class for declarative_base ORM db access """
+
     __tablename__ = 'employees'
     __table_args__ = {'autoload':True}
 
@@ -31,6 +32,7 @@ def loadSession():
     Create session 
     Return session object
     """
+
     metadata = Base.metadata
     Session  = sessionmaker(bind=engine)
     session  = Session()
@@ -42,31 +44,30 @@ def loadSession():
 def getStatus():
     """ 
     Check API Status
-
     Return JSON with API_status
     """
 
     result = {'API_status':'OK'}
     return jsonify(result)
 
+
 ## GET employees
 @app.route("/api/v1/employees", methods = ['GET'])
 def getEmployees():
     """
     Select all employees
-
     Return JSON with employeeID
     """
     
     result = {"employees": dict(session.query(Employees.EmployeeId,Employees.LastName).all()) }
     return jsonify(result)
 
+
 ## GET employeeId
 @app.route("/api/v1/employees/<employeeId>", methods = ['GET'])
 def getEmployeeIdData(employeeId):  
     '''
     Select employee depending on employeeId
-    
     Return JSON with employeeIds data
     '''
 
@@ -74,6 +75,7 @@ def getEmployeeIdData(employeeId):
     filterQuery = session.query(Employees).filter(Employees.EmployeeId==empId).all()
     result = {x: getattr(filterQuery[0], x) for x in Employees.__table__.columns.keys()}
     return jsonify(result)
+
 
 ## POST create employee
 @app.route("/api/v1/employees/new", methods = ['POST'])
@@ -84,18 +86,10 @@ def insertNewEmployee():
     if not payload or not 'LastName' in payload:
         abort(400)
 
-    conn = db_connect.connect()
-
-    with conn:
-        ## table key:
-        ## (LastName,FirstName,Title,ReportsTo,BirthDate,HireDate,Address,City,State,Country,PostalCode,Phone,Fax,Email)
-    
-        tuplePayload = payload['LastName'],payload['FirstName'],payload['Title'],payload['ReportsTo'],payload['BirthDate'],payload['HireDate'],payload['Address'],payload['City'],payload['State'],payload['Country'],payload['PostalCode'],payload['Phone'],payload['Fax'],payload['Email']    
-        
-        query = '''insert into employees(LastName,FirstName,Title,ReportsTo,BirthDate,HireDate,Address,City,State,Country,PostalCode,Phone,Fax,Email) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
-    
-        conn.execute(query,tuplePayload)
-    
+    newEmp = Employees(**payload)
+    session.add(newEmp)
+    session.flush()
+    session.commit()
     return jsonify(payload),201
 
 
