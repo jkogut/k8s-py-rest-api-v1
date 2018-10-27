@@ -63,7 +63,7 @@ class TestApiGet(object):
         url = tstcfg.apiUrl + '/v1/employees/1'
         r = requests.get(url)
 
-        assert type(r.json()['data']) is list
+        assert type(r.json()) is dict
 
 ## POST
 class TestApiPost(object):
