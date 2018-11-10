@@ -31,64 +31,53 @@ tstcfg.apiUrl = 'http://0.0.0.0:5002/api'
 
 ## GET API STATUS
 class TestApiStatus(object):
-    '''
-    test API status 
-    '''
+    """ test API status """
 
     def test_apiGetStatus(self):
-        ''' test API GET status '''
+        """ test API GET status """
 
         url = tstcfg.apiUrl + '/status'
         r = requests.get(url)
-
         assert r.json()['API_status'] == 'OK'
 
 ## GET      
 class TestApiGet(object):
-    '''
-    test API GET responses
-    '''
+    """ test API GET responses """
 
     def test_apiGetEmployees(self):
-        ''' test API GET employees '''
+        """ test API GET employees """
 
         url = tstcfg.apiUrl + '/v1/employees'
         r = requests.get(url)
-
         assert type(r.json()) is dict
 
+
     def test_apiGetEmployeeId(self):
-        ''' test API GET employee ID with ID=1'''
+        """ test API GET employee ID with ID=1 """
 
         url = tstcfg.apiUrl + '/v1/employees/1'
         r = requests.get(url)
-
         assert type(r.json()) is dict
 
 ## POST
 class TestApiPost(object):
-    '''
-    test API POST responses
-    '''
+    """ test API POST responses """
 
     def test_apiPostFakeEmployeesId(self):
-        ''' test API POST with new employee creation '''
+        """ test API POST with new employee creation """
 
         url = tstcfg.apiUrl + '/v1/employees/new'
-
         with open('app/fake_payload.json', 'r') as f:
             payload = json.load(f)
             r = requests.post(url, json=payload)
-
             assert r.status_code == 400
 
-    # def test_apiPostEmployeesId(self):
-    #     ''' test API POST with new employee creation '''
 
-    #     url = tstcfg.apiUrl + '/v1/employees/new'
+    def test_apiPostEmployeesId(self):
+        """ test API POST with new employee creation """
 
-    #     with open('app/payload.json', 'r') as f:
-    #         payload = json.load(f)
-    #         r = requests.post(url, json=payload)
-
-    #         assert r.status_code == 201
+        url = tstcfg.apiUrl + '/v1/employees/new'
+        with open('app/payload.json', 'r') as f:
+            payload = json.load(f)
+            r = requests.post(url, json=payload)
+            assert r.status_code == 201
