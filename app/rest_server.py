@@ -29,8 +29,8 @@ class Employees(Base):
 
 def loadSession():
     """ 
-    Create session 
-    Return session object
+    ---> Create session 
+    <--- Return session object
     """
 
     metadata = Base.metadata
@@ -43,8 +43,8 @@ def loadSession():
 @app.route("/api/status", methods = ['GET'])
 def getStatus():
     """ 
-    Check API Status
-    Return JSON with API_status
+    ---> Check API Status
+    <--- Return JSON with API_status
     """
 
     result = {'API_status':'OK'}
@@ -55,8 +55,8 @@ def getStatus():
 @app.route("/api/v1/employees", methods = ['GET'])
 def getEmployees():
     """
-    Select all employees
-    Return JSON with employeeID
+    ---> Select all employees
+    <--- Return JSON with employeeID
     """
     
     result = { "employees": dict(session.query(Employees.EmployeeId,Employees.LastName).all()) }
@@ -66,10 +66,10 @@ def getEmployees():
 ## GET employeeId
 @app.route("/api/v1/employees/<int:employeeId>", methods = ['GET'])
 def getEmployeeIdData(employeeId):  
-    '''
-    Select employee depending on employeeId
-    Return JSON with employeeIds data
-    '''
+    """
+    ---> Select employee depending on employeeId
+    <--- Return JSON with employeeIds data
+    """
 
     filterQuery = session.query(Employees).filter(Employees.EmployeeId==employeeId).all()
     result = { x: getattr(filterQuery[0], x) for x in Employees.__table__.columns.keys() }
@@ -79,9 +79,12 @@ def getEmployeeIdData(employeeId):
 ## POST create employee
 @app.route("/api/v1/employees/new", methods = ['POST'])
 def insertNewEmployee():
-
-    payload = request.json
+    """
+    ---> Add (create) new employee from JSON payload
+    <--- Return added JSON payload with response code
+    """
     
+    payload = request.json
     if not payload or not 'LastName' in payload:
         abort(400)
 
