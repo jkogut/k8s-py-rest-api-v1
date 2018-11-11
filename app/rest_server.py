@@ -95,6 +95,25 @@ def insertNewEmployee():
     return jsonify(payload),201
 
 
+## DELETE
+@app.route("/api/v1/employees/delete/<int:employeeId>", methods = ['DELETE'])
+def deleteEmployee(employeeId):
+    """
+    ---> Delete existing employee
+    <--- Return deleted response code
+    """
+
+    if len(session.query(Employees).filter(Employees.EmployeeId==employeeId).all()) == 0:
+        result = {employeeId:"NOT EXISTS"}
+        return jsonify(result),400
+
+    delQuery = session.query(Employees).filter(Employees.EmployeeId==employeeId)
+    delQuery.delete()
+    delQuery.session.commit()
+    result = {employeeId:"DELETED"}
+    return jsonify(result),200
+                            
+
 if __name__ == "__main__":
     session = loadSession()
 
