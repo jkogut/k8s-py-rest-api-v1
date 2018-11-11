@@ -88,7 +88,7 @@ def insertNewEmployee():
     if not payload or not 'LastName' in payload:
         abort(400)
 
-    newEmp = Employees(**payload)
+    newEmp = Employees(**dateNormalizer(payload))
     session.add(newEmp)
     session.flush()
     session.commit()
@@ -97,4 +97,19 @@ def insertNewEmployee():
 
 if __name__ == "__main__":
     session = loadSession()
+
+    def dateNormalizer(payload):
+        """
+        ---> SQLite DateTime type only accepts Python datetime 
+        <--- Return normalized JSON payload with Python datetime
+        """
+
+        import timestring
+        
+        normalizedBirthDate  = timestring.Date(payload['BirthDate']).date
+        normalizedHireDate   = timestring.Date(payload['HireDate']).date
+        payload['BirthDate'] = normalizedBirthDate
+        payload['HireDate']  = normalizedHireDate
+        return payload
+        
     app.run(host="0.0.0.0", port=int("5002"), debug=True)
