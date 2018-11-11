@@ -40,6 +40,7 @@ class TestApiStatus(object):
         r = requests.get(url)
         assert r.json()['API_status'] == 'OK'
 
+        
 ## GET      
 class TestApiGet(object):
     """ test API GET responses """
@@ -59,6 +60,7 @@ class TestApiGet(object):
         r = requests.get(url)
         assert type(r.json()) is dict
 
+        
 ## POST
 class TestApiPost(object):
     """ test API POST responses """
@@ -81,3 +83,20 @@ class TestApiPost(object):
             payload = json.load(f)
             r = requests.post(url, json=payload)
             assert r.status_code == 201
+
+            
+## DELETE
+class TestApiDelete(object):
+    """ test API DELETE responses """
+
+    def test_apiDeleteNonExistentEmployee(self):
+        """ test API DELETE with non existent employee's Id """
+
+        urlGet = tstcfg.apiUrl + '/v1/employees'
+        rGet = requests.get(urlGet) # GET all employees
+        empNum = len(rGet.json()) # count them
+        empNum = empNum + 100 # be sure Id is non existent
+        urlDel = tstcfg.apiUrl + '/v1/employees/delete/' + str(empNum)
+        rDelete = requests.delete(urlDel) # DELETE non existent 
+        assert rDelete.status_code == 400 # EXPECT BAD REQUEST
+        
