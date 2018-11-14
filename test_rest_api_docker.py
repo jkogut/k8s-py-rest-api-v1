@@ -1,5 +1,6 @@
-'''                                                                                                                           Tests for dockerized rest_simple python REST api tests with py.test
-'''
+"""
+Tests for dockerized rest_simple python REST api tests with py.test
+"""
 
 __author__     = "Jan Kogut"
 __copyright__  = "Jan Kogut"
@@ -92,11 +93,30 @@ class TestApiDelete(object):
     def test_apiDeleteNonExistentEmployee(self):
         """ test API DELETE with non existent employee's Id """
 
-        urlGet = tstcfg.apiUrl + '/v1/employees'
-        rGet = requests.get(urlGet) # GET all employees
-        empNum = len(rGet.json()) # count them
-        empNum = empNum + 100 # be sure Id is non existent
-        urlDel = tstcfg.apiUrl + '/v1/employees/delete/' + str(empNum)
-        rDelete = requests.delete(urlDel) # DELETE non existent 
+        urlGet  = tstcfg.apiUrl + '/v1/employees'
+        rGet    = requests.get(urlGet) # GET all employees
+        empNum  = len(rGet.json()) # count them
+        empNum  = empNum + 100 # be sure Id is non-existent
+        urlDel  = tstcfg.apiUrl + '/v1/employees/delete/' + str(empNum)
+        rDelete = requests.delete(urlDel) # DELETE non-existent 
         assert rDelete.status_code == 400 # EXPECT BAD REQUEST
+
         
+    def test_apiDeleteExistentEmployee(self):
+        """ test API DELETE with employee's Id """
+
+        with open('app/payload.json', 'r') as f:
+            payload     = json.load(f)
+            empLastName = payload['LastName'] 
+
+        urlGet  = tstcfg.apiUrl + '/v1/employees'
+        rGet    = requests.get(urlGet) # GET all empoyees
+
+        empDict = rGet.json()['employees'] # use a dict to represent employees
+
+        for key in empDict: # get employee's Id by his LastName
+            if empDict[key] == empLastName:
+                empId   = key
+                urlDel  = tstcfg.apiUrl + '/v1/employees/delete/' + empId
+                rDelete = requests.delete(urlDel) # DELETE empoyee
+                assert rDelete.status_code == 200 # OK
