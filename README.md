@@ -10,7 +10,7 @@ Install
 Clone the repo first and then build the docker image and run it:
 
 ```
-git@github.com:jkogut/simple-python-rest-api-v1.git
+git clone git@github.com:jkogut/simple-python-rest-api-v1.git
 
 docker build --tag simple_python_rest_api .
 
@@ -50,7 +50,7 @@ Debug
 Clone the repo:
 
 ```
-git@github.com:jkogut/simple-python-rest-api-v1.git
+git clone git@github.com:jkogut/simple-python-rest-api-v1.git
 ```
 
 Use `virtualenv` and install dependencies with `pip`:
