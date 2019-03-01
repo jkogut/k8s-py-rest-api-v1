@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyapi
+  labels:
+    app: pyapi
+spec:
+  selector:
+    matchLabels:
+      app: pyapi
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: pyapi
+        tier: web
+    spec:
+      containers:
+      - name: pyapi
+        image: gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0
+        ports:
+        - containerPort: 5002
