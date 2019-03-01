@@ -8,7 +8,7 @@ Simple python REST API with docker and travis-ci
 
 ### Table of Contents
 **[Install](#install)**<br>
-**[Deploy](#deploy)**<br>
+**[Deploy to K8S](#deployment/DEPLOYMENT)**<br>
 **[Tests](#test)**<br>
 **[Debug](#debug)**<br>
 
