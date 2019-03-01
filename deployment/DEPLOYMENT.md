@@ -30,8 +30,8 @@ Create K8S cluster using **GKE**:
 ```js
 $ gcloud container clusters create py-rest-api-v1 --num-nodes=3
 $ kubectl run simple-python-rest-api --image=gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0 --port 5002
-$ export DEPLOYMENT=$(kubectl get deployments| tail -1| awk '{print $1}')
-$ kubectl expose deployment $DEPLOYMENT --type=LoadBalancer --port 80 --target-port 5002
+$ export DEP=$(kubectl get deployments | tail -1 | awk '{print $1}')
+$ kubectl expose deployment $DEP --type=LoadBalancer --port 80 --target-port 5002
 ```
 
 - wait a little for **EXTERNAL-IP** assignment:
@@ -40,4 +40,18 @@ $ kubectl get service
 NAME                     TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)        AGE
 kubernetes               ClusterIP      10.11.240.1   <none>           443/TCP        18m
 simple-python-rest-api   LoadBalancer   10.11.245.2   35.204.242.122   80:31100/TCP   1m
+```
+
+- test with curl
+```js
+$ export DEP_IP=$(kubectl get service $DEP | tail -1 | awk '{print $4}')
+$ curl -s http://${DEP_IP}/api/status |jq
+$ curl -s http://${DEP_IP}/api/v1/employees/1 |jq
+```
+
+Delete **LoadBalancer** service and cluster:
+
+```js
+$ kubectl delete service $DEP
+$ gcloud container clusters delete py-rest-api-v1
 ```
