@@ -8,7 +8,7 @@ Simple python REST API with docker and travis-ci
 
 ### Table of Contents
 **[Install](#install)**<br>
-**[Deploy to K8S](#deployment/DEPLOYMENT)**<br>
+**[Deploy to K8S](deployment/DEPLOYMENT)**<br>
 **[Tests](#test)**<br>
 **[Debug](#debug)**<br>
 
@@ -29,7 +29,6 @@ Run tests with *pytest* to check if **API** works:
 ```js
 $ py.test -v -l test_rest_api_docker.py
 ```
-
 
 Test
 ----

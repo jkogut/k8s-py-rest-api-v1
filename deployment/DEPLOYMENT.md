@@ -28,7 +28,16 @@ GKE
 
 Create K8S cluster using **GKE**:
 ```js
-
 $ gcloud container clusters create py-rest-api-v1 --num-nodes=3
-$ kubectl run simple-python-rest-api --image=gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0 --port 8080
+$ kubectl run simple-python-rest-api --image=gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0 --port 5002
+$ export DEPLOYMENT=$(kubectl get deployments| tail -1| awk '{print $1}')
+$ kubectl expose deployment $DEPLOYMENT --type=LoadBalancer --port 80 --target-port 5002
+```
+
+- wait a little for **EXTERNAL-IP** assignment:
+```js
+$ kubectl get service
+NAME                     TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)        AGE
+kubernetes               ClusterIP      10.11.240.1   <none>           443/TCP        18m
+simple-python-rest-api   LoadBalancer   10.11.245.2   35.204.242.122   80:31100/TCP   1m
 ```
