@@ -8,7 +8,7 @@ Docker
 ------
 
 **(!)** As a prerequisite you need to build docker image and publish it to your favorite
-container repository. Example for [GCR](https://cloud.google.com/container-registry/) repository: 
+container repository. <br> Example for [GCR](https://cloud.google.com/container-registry/) repository: 
 
 - build the image:
 ```js
@@ -25,7 +25,7 @@ $ sudo docker push gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0
 
 GKE
 ---
-1. Create cluster K8S cluster on **GKE**:
+1. Create K8S cluster on **GKE**:
 ```js
 $ gcloud container clusters create py-rest-api-v1 --num-nodes=3
 $ gcloud container clusters list
