@@ -8,8 +8,7 @@ spec:
   selector:
     app: pyapi
     tier: web
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 5002
-  type: LoadBalancer
-  loadBalancerIP: "YOUR.IP.ADDRESS.HERE"
