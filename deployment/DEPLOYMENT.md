@@ -25,7 +25,7 @@ $ sudo docker push gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0
 
 GKE
 ---
-1. Create cluster K8S cluster using on **GKE**:
+1. Create cluster K8S cluster on **GKE**:
 ```js
 $ gcloud container clusters create py-rest-api-v1 --num-nodes=3
 $ gcloud container clusters list
@@ -55,7 +55,7 @@ kubernetes               ClusterIP      10.11.240.1   <none>           443/TCP  
 simple-python-rest-api   LoadBalancer   10.11.245.2   35.204.242.122   80:31100/TCP   1m
 ```
 
-4. Test deployement
+4. Test deployment with **curl**:
 ```js
 $ export DEP_IP=$(kubectl get service $DEP | tail -1 | awk '{print $4}')
 $ curl -s http://${DEP_IP}/api/status |jq
