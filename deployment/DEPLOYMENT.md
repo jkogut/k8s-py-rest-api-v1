@@ -103,3 +103,11 @@ $ gcloud projects add-iam-policy-binding ${TF_PROJ} \
 ├── main.tf
 └── terraform.tfvars
 ```
+
+3. Run deployment with terraform:
+
+```js
+$ terraform init
+$ terraform plan
+$ terraform apply 
+```
