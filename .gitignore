@@ -1,4 +1,5 @@
 .DS_Store
 .cache
 .tfvars
+.terraform
 venv
