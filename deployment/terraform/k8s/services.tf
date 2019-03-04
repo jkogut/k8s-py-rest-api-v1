@@ -13,9 +13,9 @@ resource "kubernetes_service" "pyapiweb" {
         
         type = "LoadBalancer"
         
-        ports {
+        port {
             port = 80
-            targetPort = 5002
+            target_port = 5002
         }
     }
 }

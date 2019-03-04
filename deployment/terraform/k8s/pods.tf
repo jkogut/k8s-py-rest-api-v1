@@ -10,10 +10,8 @@ resource "kubernetes_replication_controller" "pyapi" {
         replicas = 1
 
         selector {
-            matchLabels {
-                app = "pyapi"
-                tier = "web"
-            }
+            app = "pyapi"
+            tier = "web"
         }
 
         template {
@@ -24,7 +22,7 @@ resource "kubernetes_replication_controller" "pyapi" {
                 }
             }
             spec {
-                containers {
+                container {
                     name = "pyapi"
                     image = "${var.image}"
 
@@ -35,8 +33,8 @@ resource "kubernetes_replication_controller" "pyapi" {
                         }
                     }
 
-                    ports {
-                        containerPort = 5002
+                    port {
+                        container_port = 5002
                     }
                 }
             }
