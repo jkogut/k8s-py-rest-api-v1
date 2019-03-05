@@ -1,5 +1,0 @@
-config:
-  kubernetes:context:
-    secure: AAABANZbzk41YDqWT7HK7dzNBif28ee21MYeyd4DZK4Yc4r2Kdf5gETVOxQdRCASQ/kYfrBZJVIOO60oH6EpYWOaZLsPktThl4zyifqVfLSiug==
-  py-rest-api-v1:appImage:
-    secure: AAABAFsoGOiT43AczMfLIsEC9WAa7l6xRNZVa25ZGpZraWyCSAnAewLdTJve76sfKkzVUH+JRL7DIv9UVJWEQ1aEaJrTfW4qId9TBAhJxnJDxEeV
