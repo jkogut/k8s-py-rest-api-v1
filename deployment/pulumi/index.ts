@@ -1,9 +1,12 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as k8s from "@pulumi/kubernetes";
+
+// lets take image from pulumi config
+let config = new pulumi.Config();
+let appImage = config.get("appImage");
 
 // nginx container, replicated 1 time.
 const appName = "pyapi";
-const appImage = "nginx"
-
 const appLabels = { app: appName };
 const nginx = new k8s.apps.v1beta1.Deployment(appName, {
     spec: {
@@ -14,7 +17,7 @@ const nginx = new k8s.apps.v1beta1.Deployment(appName, {
             spec: { containers: [
                         { 
                             name: appName, 
-                            image: appImage,
+                            image: appImage                            
                         }] 
                     }
         }
