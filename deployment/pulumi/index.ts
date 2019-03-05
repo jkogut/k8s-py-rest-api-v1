@@ -3,7 +3,7 @@ import * as k8s from "@pulumi/kubernetes";
 
 // lets take image from pulumi config
 let config = new pulumi.Config();
-let appImage = config.get("appImage");
+let appImage = config.require("appImage");
 
 // nginx container, replicated 1 time.
 const appName = "pyapi";
