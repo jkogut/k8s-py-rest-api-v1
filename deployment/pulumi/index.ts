@@ -18,7 +18,8 @@ const nginx = new k8s.apps.v1beta1.Deployment(appName, {
                         { 
                             name: appName, 
                             image: appImage,
-                            resources: { requests: { cpu: "50m", memory: "100Mi" } }                        
+                            resources: { requests: { cpu: "50m", memory: "100Mi" } },
+                            ports: [{ containerPort: 5002 }]
                         }]
                     }
         }
