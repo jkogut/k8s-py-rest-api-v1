@@ -31,7 +31,7 @@ const frontend = new k8s.core.v1.Service(appName, {
     metadata: { labels: nginx.spec.apply(spec => spec.template.metadata.labels) },
     spec: {
         type: "LoadBalancer",
-        ports: [{ port: 80, targetPort: 80, protocol: "TCP" }],
+        ports: [{ port: 80, targetPort: 5002, protocol: "TCP" }],
         selector: appLabels
     }
 });
