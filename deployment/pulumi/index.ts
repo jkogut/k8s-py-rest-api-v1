@@ -5,10 +5,10 @@ import * as k8s from "@pulumi/kubernetes";
 let config = new pulumi.Config();
 let appImage = config.require("appImage");
 
-// nginx container, replicated 1 time.
+// testapp container, replicated 1 time.
 const appName = "pyapi";
 const appLabels = { app: appName };
-const nginx = new k8s.apps.v1beta1.Deployment(appName, {
+const testapp = new k8s.apps.v1beta1.Deployment(appName, {
     spec: {
         selector: { matchLabels: appLabels },
         replicas: 1,
@@ -26,9 +26,9 @@ const nginx = new k8s.apps.v1beta1.Deployment(appName, {
     }
 });
 
-// Allocate an IP to the nginx Deployment.
+// allocate an IP to the testapp Deployment.
 const frontend = new k8s.core.v1.Service(appName, {
-    metadata: { labels: nginx.spec.apply(spec => spec.template.metadata.labels) },
+    metadata: { labels: testapp.spec.apply(spec => spec.template.metadata.labels) },
     spec: {
         type: "LoadBalancer",
         ports: [{ port: 80, targetPort: 5002, protocol: "TCP" }],
@@ -36,5 +36,5 @@ const frontend = new k8s.core.v1.Service(appName, {
     }
 });
 
-// When "done", this will print the public IP.
+// when "done", this will print the public IP.
 export let frontendIp = frontend.status.apply(status => status.loadBalancer.ingress[0].ip);
