@@ -1,5 +1,5 @@
-# simple-python-rest-api-v1
-Simple python REST API with docker and travis-ci 
+# k8s-py-rest-api-v1
+Proof of concept for deployment to k8s of simple python REST API  
 
 
 [![Build Status](https://travis-ci.org/jkogut/simple-python-rest-api-v1.svg?branch=master)](https://travis-ci.org/jkogut/simple-python-rest-api-v1)
@@ -7,9 +7,9 @@ Simple python REST API with docker and travis-ci
 
 
 ### Table of Contents
-**[Install](#install)**<br>
+**[Install locally](#install)**<br>
 **[Deploy to K8S](deployment/DEPLOYMENT.md)**<br>
-**[Tests](#test)**<br>
+**[Run tests](#test)**<br>
 **[Debug](#debug)**<br>
 
 
