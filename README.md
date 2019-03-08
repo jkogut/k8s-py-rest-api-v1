@@ -2,7 +2,7 @@
 Proof of concept for deployment to k8s of simple python REST API  
 
 
-[![Build Status](https://travis-ci.org/jkogut/simple-python-rest-api-v1.svg?branch=master)](https://travis-ci.org/jkogut/simple-python-rest-api-v1)
+[![Build Status](https://travis-ci.org/jkogut/k8s-py-rest-api-v1.svg?branch=master)](https://travis-ci.org/jkogut/k8s-py-rest-api-v1)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 
