@@ -1,16 +1,16 @@
 ### K8S deployment
-**[Docker](#docker)**<br>
 **[GKE](#gke)**<br>
+**[AKS](#aks)**<br>
 **[Terraform](#terraform)**<br>
-**[Pulumi](pulumi/README.md)**<br>
+**[Pulumi](#pulumi)**<br>
 
-Docker
-------
+GKE
+---
 
 **(!)** As a prerequisite you need to build docker image and publish it to your favorite
 container repository. <br> Example for [GCR](https://cloud.google.com/container-registry/) repository: 
 
-- build the image:
+1. build the image:
 ```js
 $ git clone git@github.com:jkogut/simple-python-rest-api-v1.git
 $ sudo docker build --tag simple_python_rest_api:1.0.0 .
@@ -23,16 +23,17 @@ $ sudo docker tag simple_python_rest_api:1.0.0 gcr.io/${PROJECT_ID}/simple_pytho
 $ sudo docker push gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0
 ```
 
-GKE
----
-1. Create K8S cluster on **GKE**:
+2. Create K8S cluster on **GKE**:
 ```js
 $ gcloud container clusters create py-rest-api-v1 --num-nodes=3
 $ gcloud container clusters list
 $ gcloud container clusters describe py-rest-api-v1
 ```
 
-2. Deploy your application manually or using manifest files:
+K8S
+----
+
+Deploy your application on Kubernetes cluster:
 
 - **Method A:** run your container image on newly created cluster and expose service: 
 ```js
@@ -62,11 +63,14 @@ $ curl -s http://${DEP_IP}/api/status |jq
 $ curl -s http://${DEP_IP}/api/v1/employees/1 |jq
 ```
 
-5. Delete **LoadBalancer** service and cluster:
+5. Delete **LoadBalancer** service:
 ```js
 $ kubectl delete service $DEP
-$ gcloud container clusters delete py-rest-api-v1
 ```
+
+6. Delete k8s cluster:
+AKS: `TODO!!!`
+GKE: `$ gcloud container clusters delete py-rest-api-v1`
 
 Terraform
 ---------
