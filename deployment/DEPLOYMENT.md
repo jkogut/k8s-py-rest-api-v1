@@ -16,7 +16,7 @@ container repository. <br> Example for [GCR](https://cloud.google.com/container-
 $ git clone git@github.com:jkogut/simple-python-rest-api-v1.git
 $ sudo docker build --tag simple_python_rest_api:1.0.0 .
 ```
-- configure docker to access GCR, retag and push the image:
+- configure docker to access **GCR**, retag and push the image:
 ```js
 $ gcloud auth configure-docker
 $ export PROJECT_ID="$(gcloud config get-value project -q)"
@@ -37,6 +37,20 @@ AKS
 **(!)** As a prerequisite you need to build docker image and publish it to your favorite
 container repository. <br> Example for [ACR](https://azure.microsoft.com/en-us/services/container-registry/) repository: 
 
+1. build the image:
+```js
+$ git clone git@github.com:jkogut/simple-python-rest-api-v1.git
+$ sudo docker build --tag simple_python_rest_api:1.0.0 .
+```
+- configure docker to access **ACR**, retag and push the image:
+```js
+$ az acr create --resource-group myAksResourceGroup --name usernameAksCr --sku Basic
+$ az acr login --name usernameAksCr
+$ sudo docker tag simple_python_rest_api:1.0.0 usernameakscr.azurecr.io/simple_python_rest_api:1.0.0
+$ sudo docker push usernameakscr.azurecr.io/simple_python_rest_api:1.0.0
+```
+ 
+2. Create K8S cluster on **AKS**:
 ```js
 $ az group create --name myResourceGroup --location your_region_location 
 $ az aks create \
