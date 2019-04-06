@@ -89,4 +89,4 @@ $ kubectl delete service $DEP
 
 6. Delete k8s cluster:
 - GKE: `$ gcloud container clusters delete py-rest-api-v1`
-- AKS: `$ az aks delete --name py-rest-api-v1 --resource-group myAksResourceGroup --yes`
+- AKS: `$ az aks delete --name py-rest-api-v1 --resource-group myAksResourceGroup --yes --no-wait`
