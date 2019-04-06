@@ -1,5 +1,6 @@
 ### K8S deployment
 **[GKE](#gke)**<br>
+**[AKS](#aks)**<br>
 **[K8S](#k8s)**<br>
 **[Terraform](terraform/README.md)**<br>
 **[Pulumi](pulumi/README.md)**<br>
@@ -28,6 +29,24 @@ $ sudo docker push gcr.io/${PROJECT_ID}/simple_python_rest_api:1.0.0
 $ gcloud container clusters create py-rest-api-v1 --num-nodes=3
 $ gcloud container clusters list
 $ gcloud container clusters describe py-rest-api-v1
+```
+
+AKS
+---
+
+**(!)** As a prerequisite you need to build docker image and publish it to your favorite
+container repository. <br> Example for [ACR](https://azure.microsoft.com/en-us/services/container-registry/) repository: 
+
+```js
+$ az group create --name myResourceGroup --location your_region_location 
+$ az aks create \
+    --resource-group myResourceGroup \
+    --name myAKSCluster \
+    --node-count 1 \
+    --enable-addons monitoring \
+    --generate-ssh-keys
+
+$ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
 ```
 
 K8S
