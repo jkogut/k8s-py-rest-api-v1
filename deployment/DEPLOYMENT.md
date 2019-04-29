@@ -8,6 +8,16 @@
 GKE
 ---
 
+Configure `gcloud` with your default project/region/zone,
+example for `europe-west1/europe-west1-b`:
+
+```js
+$ gcloud auth login
+$ gcloud config set project your_project
+$ gcloud config set compute/region europe-west1
+$ gcloud config set compute/zone europe-west1-b
+```
+
 **(!)** As a prerequisite you need to build docker image and publish it to your favorite
 container repository. <br> Example for [GCR](https://cloud.google.com/container-registry/) repository: 
 
